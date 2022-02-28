@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Welcome To Phone Hunter</title>
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+   <header>
+      <h1 class="text-info text-center py-4 fw-bold">Phone Cyclone</h1>
+   </header>
+
+   <main class="container">
+      <!-- search field for search products  -->
+      <div class="input-group mb-3">
+         <input type="text" id="search-field" class="form-control" placeholder="Phone search here">
+         <button class="input-group-text" onclick="searchPhone()">search</button>
+      </div>
+      <!-- display product details -->
+      <div id="product-details">
+
+      </div>
+      <!-- display phone with name and brand -->
+      <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4">
+
+      </div>
+   </main>
+
+   <script src="js/bootstrap.bundle.min.js"></script>
+   <script src="js/app.js"></script>
+</body>
+
+</html>
