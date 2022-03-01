@@ -3,6 +3,7 @@ document.getElementById("error-message").style.display = "none";
 const searchPhone = (phone) => {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
+  searchField.value = "";
 
   if (searchText == "") {
     document.getElementById("error-message").style.display = "block";
@@ -31,12 +32,11 @@ const searchPhone = (phone) => {
 };
 // display phone in ui with name and brand
 const displaySearchResult = (data) => {
-  // console.log(data);
+  const newArray = data.slice(0, 20);
   const searchResult = document.getElementById("search-result");
   searchResult.textContent = "";
 
-  data.forEach((product) => {
-    // console.log(product.slug);
+  newArray.forEach((product) => {
     const div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
@@ -64,7 +64,6 @@ const loadProductDetails = (id) => {
 };
 
 const displayProductDetails = (product) => {
-  console.log(product);
   const productDetails = document.getElementById("product-details");
   productDetails.textContent = "";
   const div = document.createElement("div");
@@ -77,9 +76,11 @@ const displayProductDetails = (product) => {
                   <div class="card-body">
                       <p class="card-text">Id: ${product.slug}</p>
                       <h5 class="card-title">Name: ${product.name}</h5>
+                      <p id="release-date" class="card-text"><small class="text-muted">Release Date: ${product.releaseDate}</small></p>
                       <p class="card-text">Brand: ${product.brand}</p>
                       <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
                       <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
+                      <p class="card-text">Sensors: ${product.mainFeatures.sensors}</p>
                       <p class="card-text">Chipset: ${product.mainFeatures.chipSet}</p>
                   </div>
                </div>
@@ -105,5 +106,7 @@ const displayProductBySearchId = (data) => {
                </div>
             </div>
           `;
+
   idResult.appendChild(div);
 };
+
