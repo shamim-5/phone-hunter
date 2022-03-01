@@ -66,6 +66,7 @@ const loadProductDetails = (id) => {
 const displayProductDetails = (product) => {
   const productDetails = document.getElementById("product-details");
   productDetails.textContent = "";
+  console.log(product);
   const div = document.createElement("div");
   div.classList.add("row");
   div.innerHTML = `
@@ -76,7 +77,7 @@ const displayProductDetails = (product) => {
                   <div class="card-body">
                       <p class="card-text">Id: ${product.slug}</p>
                       <h5 class="card-title">Name: ${product.name}</h5>
-                      <p id="release-date" class="card-text"><small class="text-muted">Release Date: ${product.releaseDate}</small></p>
+                      <p id="release-date" class="card-text"><small class="text-muted"> ${product.releaseDate}</small></p>
                       <p class="card-text">Brand: ${product.brand}</p>
                       <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
                       <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
@@ -86,6 +87,11 @@ const displayProductDetails = (product) => {
                </div>
         `;
   productDetails.appendChild(div);
+
+  const releaseDate = document.getElementById("release-date");
+  if (releaseDate.innerText == "") {
+    releaseDate.innerText = "Released date not found";
+  }
 };
 // display search product by Id
 const displayProductBySearchId = (data) => {
@@ -109,4 +115,3 @@ const displayProductBySearchId = (data) => {
 
   idResult.appendChild(div);
 };
-
