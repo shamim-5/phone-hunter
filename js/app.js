@@ -68,20 +68,22 @@ const displayProductDetails = (product) => {
   const productDetails = document.getElementById("product-details");
   productDetails.textContent = "";
   const div = document.createElement("div");
-  div.classList.add("col");
+  div.classList.add("row");
   div.innerHTML = `
-            <div class="card shadow" >
-               <img src="${product.image}" class="card-img-top p-3" alt="...">
-               <div class="card-body">
-                  <p class="card-text">Id: ${product.slug}</p>
-                  <h5 class="card-title">Name: ${product.name}</h5>
-                  <p class="card-text">Brand: ${product.brand}</p>
-                  <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
-                  <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
-                  <p class="card-text">Chipset: ${product.mainFeatures.chipSet}</p>
+               <div class="col-md-6 col-12 py-4 d-flex justify-content-center">
+                  <img src="${product.image}" class="img-fluid rounded-start" alt="...">
                </div>
-            </div>
-            `;
+               <div class="col-md-6 col-12">
+                  <div class="card-body">
+                      <p class="card-text">Id: ${product.slug}</p>
+                      <h5 class="card-title">Name: ${product.name}</h5>
+                      <p class="card-text">Brand: ${product.brand}</p>
+                      <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
+                      <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
+                      <p class="card-text">Chipset: ${product.mainFeatures.chipSet}</p>
+                  </div>
+               </div>
+        `;
   productDetails.appendChild(div);
 };
 // display search product by Id
@@ -92,10 +94,10 @@ const displayProductBySearchId = (data) => {
   const div = document.createElement("div");
   div.classList.add("row");
   div.innerHTML = `
-            <div class="col-5 py-4">
+            <div class="col-md-6 col-12 py-4 d-flex justify-content-center">
                <img src="${data.image}" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-7">
+            <div class="col-md-6 col-12">
                <div class="card-body">
                   <h5 class="card-title">Name: ${data.name}</h5>
                   <p class="card-text">Sensor: ${data.mainFeatures.sensors}</p>
