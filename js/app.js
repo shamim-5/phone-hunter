@@ -1,17 +1,19 @@
-// search#search-field
-// button{onclick="searchPhone"}
-// div#product-details
-// div#search-result
-
 const searchPhone = (phone) => {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   console.log(searchText);
 
-  const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => displaySearchResult(data.data));
+  if (searchText.length < 7) {
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => displaySearchResult(data.data));
+  } else {
+    const url = `https://openapi.programming-hero.com/api/phone/${searchText}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => displayIdResult(data.data));
+  }
 };
 // display phone in ui with name and brand
 const displaySearchResult = (data) => {
@@ -66,3 +68,22 @@ const displayProductDetails = (product) => {
   productDetails.appendChild(div);
 };
 
+const displayIdResult = (data) => {
+  console.log(data);
+  const idResult = document.getElementById("search-id");
+  const div = document.createElement("div");
+  div.classList.add("row");
+  div.innerHTML = `
+            <div class="col-4 py-4">
+               <img src="${data.image}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-8">
+               <div class="card-body">
+                  <h5 class="card-title">Name: ${data.name}</h5>
+                  <p class="card-text">Sensor: ${data.mainFeatures.sensors}</p>
+                  <p class="card-text"><small class="text-muted">Release Date: ${data.releaseDate}</small></p>
+               </div>
+            </div>
+          `;
+  idResult.appendChild(div);
+};
