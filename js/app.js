@@ -12,7 +12,7 @@ const searchPhone = (phone) => {
     const url = `https://openapi.programming-hero.com/api/phone/${searchText}`;
     fetch(url)
       .then((res) => res.json())
-      .then((data) => displayIdResult(data.data));
+      .then((data) => displayProductBySearchId(data.data));
   }
 };
 // display phone in ui with name and brand
@@ -50,6 +50,7 @@ const loadProductDetails = (id) => {
 const displayProductDetails = (product) => {
   console.log(product);
   const productDetails = document.getElementById("product-details");
+  productDetails.textContent = "";
   const div = document.createElement("div");
   div.classList.add("col");
   div.innerHTML = `
@@ -67,17 +68,18 @@ const displayProductDetails = (product) => {
             `;
   productDetails.appendChild(div);
 };
-
-const displayIdResult = (data) => {
+// display search product by Id
+const displayProductBySearchId = (data) => {
   console.log(data);
   const idResult = document.getElementById("search-id");
+  idResult.textContent = "";
   const div = document.createElement("div");
   div.classList.add("row");
   div.innerHTML = `
-            <div class="col-4 py-4">
+            <div class="col-5 py-4">
                <img src="${data.image}" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-8">
+            <div class="col-7">
                <div class="card-body">
                   <h5 class="card-title">Name: ${data.name}</h5>
                   <p class="card-text">Sensor: ${data.mainFeatures.sensors}</p>
