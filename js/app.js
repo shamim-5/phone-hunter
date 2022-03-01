@@ -1,14 +1,28 @@
+document.getElementById("error-message").style.display = "none";
+
 const searchPhone = (phone) => {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
-  console.log(searchText);
 
-  if (searchText.length < 7) {
+  if (searchText == "") {
+    document.getElementById("error-message").style.display = "block";
+    document.getElementById("search-result").innerHTML = "";
+    document.getElementById("search-id").innerHTML = "";
+    document.getElementById("product-details").innerHTML = "";
+  } else if (searchText.length < 7 && searchText.length >= 0) {
+    document.getElementById("error-message").style.display = "none";
+    document.getElementById("product-details").innerHTML = "";
+    document.getElementById("search-id").innerHTML = "";
+
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => displaySearchResult(data.data));
-  } else {
+  } else if (searchText.length >= 7) {
+    document.getElementById("error-message").style.display = "none";
+    document.getElementById("product-details").innerHTML = "";
+    document.getElementById("search-id").innerHTML = "";
+
     const url = `https://openapi.programming-hero.com/api/phone/${searchText}`;
     fetch(url)
       .then((res) => res.json())
@@ -19,6 +33,8 @@ const searchPhone = (phone) => {
 const displaySearchResult = (data) => {
   // console.log(data);
   const searchResult = document.getElementById("search-result");
+  searchResult.textContent = "";
+
   data.forEach((product) => {
     // console.log(product.slug);
     const div = document.createElement("div");
