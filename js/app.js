@@ -66,7 +66,6 @@ const loadProductDetails = (id) => {
 const displayProductDetails = (product) => {
   const productDetails = document.getElementById("product-details");
   productDetails.textContent = "";
-  console.log(product);
   const div = document.createElement("div");
   div.classList.add("row");
   div.innerHTML = `
@@ -75,14 +74,14 @@ const displayProductDetails = (product) => {
                </div>
                <div class="col-md-6 col-12">
                   <div class="card-body">
-                      <p class="card-text">Id: ${product.slug}</p>
-                      <h5 class="card-title">Name: ${product.name}</h5>
-                      <p id="release-date" class="card-text"><small class="text-muted"> ${product.releaseDate}</small></p>
-                      <p class="card-text">Brand: ${product.brand}</p>
-                      <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
-                      <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
-                      <p class="card-text">Sensors: ${product.mainFeatures.sensors}</p>
-                      <p class="card-text">Chipset: ${product.mainFeatures.chipSet}</p>
+                  <h5 class="card-title">Name: ${product.name}</h5>
+                  <p id="release-date" class="card-text"><small class="text-muted"> ${product.releaseDate}</small></p>
+                  <p class="card-text">Brand: ${product.brand}</p>
+                  <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
+                  <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
+                  <p class="card-text">Sensors: ${product.mainFeatures.sensors}</p>
+                  <p class="card-text">Chipset: ${product.mainFeatures.chipSet}</p>
+                  <p class="card-text">Id: ${product.slug}</p>
                   </div>
                </div>
         `;
@@ -95,7 +94,6 @@ const displayProductDetails = (product) => {
 };
 // display search product by Id
 const displayProductBySearchId = (data) => {
-  console.log(data);
   const idResult = document.getElementById("search-id");
   idResult.textContent = "";
   const div = document.createElement("div");
@@ -107,11 +105,20 @@ const displayProductBySearchId = (data) => {
             <div class="col-md-6 col-12">
                <div class="card-body">
                   <h5 class="card-title">Name: ${data.name}</h5>
+                  <p id="release-date2" class="card-text"><small class="text-muted"> ${data.releaseDate}</small></p>
                   <p class="card-text">Sensor: ${data.mainFeatures.sensors}</p>
-                  <p class="card-text"><small class="text-muted">Release Date: ${data.releaseDate}</small></p>
+                  <p class="card-text">Storage: ${data.mainFeatures.storage}</p>
+                  <p class="card-text">Display: ${data.mainFeatures.displaySize}</p>
+                  <p class="card-text">Wi-fi: ${data.others.WLAN}</p>
+                  <p class="card-text">Bluetooth: ${data.others.Bluetooth}</p>
+                  <p class="card-text">Gps: ${data.others.GPS}</p>
                </div>
             </div>
           `;
 
   idResult.appendChild(div);
+  const releaseDate2 = document.getElementById("release-date2");
+  if (releaseDate2.innerText == "") {
+    releaseDate2.innerText = "Released date not found";
+  }
 };
