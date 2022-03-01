@@ -4,6 +4,7 @@ const searchPhone = (phone) => {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   searchField.value = "";
+  const searchResult = document.getElementById("search-result");
 
   if (searchText == "") {
     document.getElementById("error-message").style.display = "block";
@@ -16,6 +17,7 @@ const searchPhone = (phone) => {
     document.getElementById("search-id").innerHTML = "";
 
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+
     fetch(url)
       .then((res) => res.json())
       .then((data) => displaySearchResult(data.data));
@@ -25,6 +27,7 @@ const searchPhone = (phone) => {
     document.getElementById("search-id").innerHTML = "";
 
     const url = `https://openapi.programming-hero.com/api/phone/${searchText}`;
+
     fetch(url)
       .then((res) => res.json())
       .then((data) => displayProductBySearchId(data.data));
