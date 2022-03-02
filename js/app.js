@@ -12,8 +12,9 @@ const searchPhone = (phone) => {
   if (searchText == "") {
     searchResult.innerText = "";
     productDetails.innerText = "";
+    document.getElementById("search-id").innerText = "";
     document.getElementById("error-message").style.display = "block";
-  } else if (searchText.length < 15) {
+  } else if (searchText.length < 20) {
     // handle search product by name
     productDetails.innerText = "";
     document.getElementById("search-id").innerText = "";
