@@ -1,37 +1,51 @@
 document.getElementById("error-message").style.display = "none";
-
+// handle search button and fetch url
 const searchPhone = (phone) => {
+  const productDetails = document.getElementById("product-details");
+  const searchResult = document.getElementById("search-result");
+  searchResult.innerText = "";
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   searchField.value = "";
-  const searchResult = document.getElementById("search-result");
+  document.getElementById("error-message").style.display = "none";
 
   if (searchText == "") {
+    searchResult.innerText = "";
+    productDetails.innerText = "";
     document.getElementById("error-message").style.display = "block";
-    document.getElementById("search-result").innerHTML = "";
-    document.getElementById("search-id").innerHTML = "";
-    document.getElementById("product-details").innerHTML = "";
-  } else if (searchText.length < 7 && searchText.length >= 0) {
-    document.getElementById("error-message").style.display = "none";
-    document.getElementById("product-details").innerHTML = "";
-    document.getElementById("search-id").innerHTML = "";
-
+  } else if (searchText.length < 15) {
+    // handle search product by name
+    productDetails.innerText = "";
+    document.getElementById("search-id").innerText = "";
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-
     fetch(url)
       .then((res) => res.json())
-      .then((data) => displaySearchResult(data.data));
-  } else if (searchText.length >= 7) {
-    document.getElementById("error-message").style.display = "none";
-    document.getElementById("product-details").innerHTML = "";
-    document.getElementById("search-id").innerHTML = "";
-
+      .then((data) => {
+        if (data.status == true) {
+          displaySearchResult(data.data);
+        } else {
+          throw new Error("invalid data");
+        }
+      })
+      .catch((error) => displayError(error));
+  } else {
+    //  handle search product use id
+    document.getElementById("search-id").innerText = "";
+    productDetails.innerText = "";
     const url = `https://openapi.programming-hero.com/api/phone/${searchText}`;
-
     fetch(url)
       .then((res) => res.json())
-      .then((data) => displayProductBySearchId(data.data));
+      .then((data) => {
+        if (data.status == true) {
+          displayProductBySearchId(data.data);
+        }
+      });
   }
+};
+
+// error function
+const displayError = (error) => {
+  document.getElementById("error-message").style.display = "block";
 };
 // display phone in ui with name and brand
 const displaySearchResult = (data) => {
@@ -72,21 +86,26 @@ const displayProductDetails = (product) => {
   const div = document.createElement("div");
   div.classList.add("row");
   div.innerHTML = `
-               <div class="col-md-6 col-12 py-4 d-flex justify-content-center">
+            <div class="col-md-6 col-12 py-4 d-flex justify-content-center">
                   <img src="${product.image}" class="img-fluid rounded-start" alt="...">
-               </div>
-               <div class="col-md-6 col-12">
-                  <div class="card-body">
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="card-body">
                   <h5 class="card-title">Name: ${product.name}</h5>
                   <p id="release-date" class="card-text"><small class="text-muted"> ${product.releaseDate}</small></p>
                   <p class="card-text">Brand: ${product.brand}</p>
+                  <p class="card-text">Id: ${product.slug}</p>
                   <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
                   <p class="card-text">Display: ${product.mainFeatures.displaySize}</p>
                   <p class="card-text">Sensors: ${product.mainFeatures.sensors}</p>
                   <p class="card-text">Chipset: ${product.mainFeatures.chipSet}</p>
-                  <p class="card-text">Id: ${product.slug}</p>
-                  </div>
-               </div>
+                <div id="set-others-new">
+                  <p id="others-info-new" class="card-text">Bluetooth: ${product?.others?.Bluetooth}</p>
+                  <p class="card-text">WLAN: ${product?.others?.WLAN}</p>
+                  <p class="card-text">GPS: ${product?.others?.GPS}</p>
+                </div>
+              </div>
+            </div>
         `;
   productDetails.appendChild(div);
 
@@ -94,10 +113,17 @@ const displayProductDetails = (product) => {
   if (releaseDate.innerText == "") {
     releaseDate.innerText = "Released date not found";
   }
+  // others info handling
+  const othersDetailsNew = document.getElementById("others-info-new");
+  const setOthersNew = document.getElementById("set-others-new");
+  if (othersDetailsNew.innerText == "Bluetooth: undefined") {
+    setOthersNew.innerText = `Others: Others information not found`;
+  }
 };
 // display search product by Id
 const displayProductBySearchId = (data) => {
   const idResult = document.getElementById("search-id");
+  document.getElementById("error-message").style.display = "none";
   idResult.textContent = "";
   const div = document.createElement("div");
   div.classList.add("row");
@@ -106,22 +132,34 @@ const displayProductBySearchId = (data) => {
                <img src="${data.image}" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-6 col-12">
-               <div class="card-body">
+              <div class="card-body">
                   <h5 class="card-title">Name: ${data.name}</h5>
-                  <p id="release-date2" class="card-text"><small class="text-muted"> ${data.releaseDate}</small></p>
-                  <p class="card-text">Sensor: ${data.mainFeatures.sensors}</p>
-                  <p class="card-text">Storage: ${data.mainFeatures.storage}</p>
+                  <p id="release-date-new" class="card-text"><small  class="text-muted">Release Date: ${data.releaseDate}</small></p>
+                  <p class="card-text">Brand: ${data.brand}</p>
+                  <p class="card-text">Id: ${data.slug}</p>
                   <p class="card-text">Display: ${data.mainFeatures.displaySize}</p>
-                  <p class="card-text">Wi-fi: ${data.others.WLAN}</p>
-                  <p class="card-text">Bluetooth: ${data.others.Bluetooth}</p>
-                  <p class="card-text">Gps: ${data.others.GPS}</p>
-               </div>
+                  <p class="card-text">Storage: ${data.mainFeatures.storage}</p>
+                  <p class="card-text">Sensor: ${data.mainFeatures.sensors}</p>
+                  <p class="card-text">Chipset: ${data.mainFeatures.chipSet}</p>
+                <div id="set-others">
+                  <p class="card-text">Bluetooth: ${data?.others?.Bluetooth}</p>
+                  <p class="card-text">WLAN: ${data?.others?.WLAN}</p>
+                  <p class="card-text">GPS: ${data?.others?.GPS}</p>
+                </div>
+                  
+              </div>
             </div>
-          `;
-
+         `;
   idResult.appendChild(div);
-  const releaseDate2 = document.getElementById("release-date2");
-  if (releaseDate2.innerText == "") {
-    releaseDate2.innerText = "Released date not found";
+  const releaseDateNew = document.getElementById("release-date-new");
+  if (releaseDateNew.innerText == "Release Date:") {
+    releaseDateNew.innerText = `Release Date: Released date not found !`;
+  }
+  // others info handling
+  const othersDetails = document.getElementById("others-info");
+  const setOthers = document.getElementById("set-others");
+  if (othersDetails.innerText == "Bluetooth: undefined") {
+    setOthers.innerText = `Others: Others information not found`;
   }
 };
+// ==============all done==================
