@@ -92,7 +92,7 @@ const displayProductDetails = (product) => {
             <div class="col-md-6 col-12">
               <div class="card-body">
                   <h5 class="card-title">Name: ${product.name}</h5>
-                  <p id="release-date" class="card-text"><small class="text-muted"> ${product.releaseDate}</small></p>
+                  <p id="release-date" class="card-text"><small class="text-muted">Release Date: ${product.releaseDate}</small></p>
                   <p class="card-text">Brand: ${product.brand}</p>
                   <p class="card-text">Id: ${product.slug}</p>
                   <p class="card-text">Storage: ${product.mainFeatures.storage}</p>
@@ -110,8 +110,8 @@ const displayProductDetails = (product) => {
   productDetails.appendChild(div);
 
   const releaseDate = document.getElementById("release-date");
-  if (releaseDate.innerText == "") {
-    releaseDate.innerText = "Released date not found";
+  if (releaseDate.innerText == "Release Date:") {
+    releaseDate.innerText = `Release Date: Released date not found !`;
   }
   // others info handling
   const othersDetailsNew = document.getElementById("others-info-new");
